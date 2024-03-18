@@ -1,14 +1,14 @@
 #pragma once
 
-#include<vector>
-#include<string>
-#include<memory>
-#include<iostream>
-#include"card.hpp"
-#include"board.hpp"
-#include"hand.hpp"
-#include"player.hpp"
-#include"display.hpp"
+#include <vector>
+#include <string>
+#include <memory>
+#include <iostream>
+#include "Card.hpp"
+#include "Board.hpp"
+#include "Hand.hpp"
+#include "Player.hpp"
+#include "Display.hpp"
 
 class HandType
 {

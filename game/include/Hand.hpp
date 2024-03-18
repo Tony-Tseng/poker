@@ -2,7 +2,7 @@
 #include<vector>
 #include<iostream>
 
-#include"card.hpp"
+#include "Card.hpp"
 
 static std::vector<std::string> hand_name = 
 {

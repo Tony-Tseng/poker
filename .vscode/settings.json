@@ -71,6 +71,8 @@
         "utility": "cpp",
         "deque": "cpp",
         "span": "cpp",
-        "format": "cpp"
+        "format": "cpp",
+        "queue": "cpp",
+        "thread": "cpp"
     }
 }

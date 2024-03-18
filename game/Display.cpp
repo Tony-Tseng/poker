@@ -1,4 +1,4 @@
-#include "display.hpp"
+#include "Display.hpp"
 
 void display(Card& card)
 {

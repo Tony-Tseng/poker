@@ -1,4 +1,4 @@
-#include "handtype.hpp"
+#include "HandType.hpp"
 
 int CheckStraight(std::vector<int> number_table)
 {

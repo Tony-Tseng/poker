@@ -1,10 +1,9 @@
 #pragma once
-#include<string>
-#include<vector>
-#include<iostream>
+#include <string>
+#include <vector>
+#include <iostream>
 
-#include "card.hpp"
-// #include "display.hpp"
+#include "Card.hpp"
 
 class Player
 {

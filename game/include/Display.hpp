@@ -1,11 +1,11 @@
 #pragma once
 #include<iostream>
 #include<memory>
-#include "card.hpp"
-#include "deck.hpp"
-#include "board.hpp"
-#include "hand.hpp"
-#include "player.hpp"
+#include "Card.hpp"
+#include "Deck.hpp"
+#include "Board.hpp"
+#include "Hand.hpp"
+#include "Player.hpp"
 
 void display(Card& card);
 void display(Deck& deck);

@@ -1,4 +1,4 @@
-#include "hand.hpp"
+#include "Hand.hpp"
 
 bool Hand::operator==(Hand& hand)
 {

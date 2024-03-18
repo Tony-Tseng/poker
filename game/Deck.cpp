@@ -1,4 +1,4 @@
-#include<deck.hpp>
+#include "Deck.hpp"
 
 void Deck::Initialize()
 {
@@ -61,8 +61,8 @@ void Deck::Shuffle()
     /*
         Random shuffle function
     */
-    // unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    unsigned seed = 10283;
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    // unsigned seed = 10283;
     std::default_random_engine e(seed);
     std::shuffle(std::begin(cards), std::end(cards), e);
 }

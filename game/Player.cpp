@@ -1,4 +1,4 @@
-#include "player.hpp"
+#include "Player.hpp"
 
 void Player::PushCards(std::vector<Card> cards)
 {

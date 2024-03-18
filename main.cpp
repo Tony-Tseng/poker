@@ -1,10 +1,10 @@
-#include<iostream>
-#include"card.hpp"
-#include"player.hpp"
-#include"hand.hpp"
-#include"display.hpp"
-#include"handtype.hpp"
-#include"poker.hpp"
+#include <iostream>
+#include "Card.hpp"
+#include "Player.hpp"
+#include "Hand.hpp"
+#include "Display.hpp"
+#include "HandType.hpp"
+#include "Poker.hpp"
 
 int main(){
     // Card card1(Suits(3), 11);
@@ -42,7 +42,7 @@ int main(){
     poker.NextStage();
 
     // PreFlop
-    // poker.DisplayStage();
+    poker.DisplayStage();
     poker.NextStage();
     poker.DisplayPlayerCards();
 
@@ -50,12 +50,13 @@ int main(){
     poker.DisplayStage();
     poker.NextStage();
 
-    // Turn
-    poker.DisplayStage();
     poker.DisplayBoardCards();
     poker.DisplayDeckCards();
-    poker.Simulate();
+    poker.Simulate("thread");
+    poker.Simulate("naive");
 
+    // Turn
+    // poker.DisplayStage();
     // poker.NextStage();
 
     // River

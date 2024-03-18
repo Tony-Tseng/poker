@@ -1,4 +1,4 @@
-#include "poker.hpp"
+#include "Poker.hpp"
 
 void Poker::DoReady()
 {
@@ -70,7 +70,7 @@ void Poker::DoRiver()
 
 void Poker::DoSettle()
 {
-    std::vector<std::pair<std::shared_ptr<Hand>, int>> player_hands = GetPlayerHands(this->board);
+    std::vector<std::pair<std::shared_ptr<Hand>, int>> player_hands = GetPlayerHands(this->board, this->players);
     std::vector<std::pair<std::shared_ptr<Hand>, int>> winner = GetWinner(player_hands);
     // To-do
     // Settle the chips and recycle the cards.
@@ -83,71 +83,6 @@ void Poker::DoSettle()
 void Poker::DoEnd()
 {
     DisplayResult();
-}
-
-std::vector<std::pair<std::shared_ptr<Hand>, int>> Poker::GetPlayerHands(Board board)
-{
-    std::vector<std::pair<std::shared_ptr<Hand>, int>> player_hands;
-    for( int i=0;i<this->players.size();i++)
-    {
-        if(!this->players[i].fold)
-        {
-            HandType hand_type(this->players[i], board);
-            std::shared_ptr<Hand> hand = hand_type.PickTopHand();
-            player_hands.push_back({hand, i});
-        }
-    }
-    return player_hands;
-}
-
-
-std::vector<std::pair<std::shared_ptr<Hand>, int>> Poker::GetWinner(std::vector<std::pair<std::shared_ptr<Hand>, int>>& player_hands)
-{
-    std::vector<std::pair<std::shared_ptr<Hand>, int>> winner;
-    std::sort(player_hands.begin(), player_hands.end(), hand_compare);
-    winner.push_back(player_hands[0]);
-
-    int i = 1;
-    while(i < player_hands.size() && *player_hands[0].first == *player_hands[i].first)
-    {
-        winner.push_back( player_hands[i] );
-        i++;
-    }
-
-    return winner;
-}
-
-void Poker::CalculateCombination(std::vector<int>& win_turns, int idx, int deal_num)
-{   
-    if(deal_num==0)
-    {
-        std::vector<std::pair<std::shared_ptr<Hand>, int>> player_hands = GetPlayerHands(this->board);
-        std::vector<std::pair<std::shared_ptr<Hand>, int>> winner = GetWinner(player_hands);
-        if( winner.size() == 1 )
-        {
-            win_turns[winner[0].second]++;
-        }
-        else
-        {
-            win_turns[win_turns.size()-1]++;
-        }
-    }
-    else
-    {
-        for(int i = idx; i <= deck.ShowCards().size()-deal_num; i++)
-        {
-            this->board.PushCards({deck.GetCard(i)});
-            CalculateCombination(win_turns, i+1, deal_num-1);
-            this->board.PopCards(1);
-        }
-    }
-    return;
-}
-
-bool hand_compare(std::pair<std::shared_ptr<Hand>, int> a, std::pair<std::shared_ptr<Hand>, int> b)
-{
-    if( *a.first == *b.first ) return a.second < b.second;
-    else return *a.first > *b.first;
 }
 
 void Poker::NextStage()
@@ -181,16 +116,12 @@ void Poker::NextStage()
     }
 }
 
-void Poker::Simulate()
+void Poker::Simulate(std::string methods)
 {
-    std::vector<int> win_turns(players.size()+1, 0);
-    CalculateCombination(win_turns, 0, 5-board.ShowCards().size());
-
-    for(auto turn: win_turns)
-    {
-        std::cout << turn << " ";
-    }
-    std::cout << std::endl;
+    Simulator* simulator = CreateSimulator(methods, deck, board, players);
+    simulator->Simulate();
+    simulator->ShowWinTurns();
+    return;
 }
 
 void Poker::DisplayPlayerCards()

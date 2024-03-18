@@ -1,16 +1,18 @@
 #pragma once
 #include<vector>
 
-#include "board.hpp"
-#include "deck.hpp"
-#include "hand.hpp"
-#include "player.hpp"
-#include "display.hpp"
-#include "handtype.hpp"
+#include "Board.hpp"
+#include "Deck.hpp"
+#include "Hand.hpp"
+#include "Player.hpp"
+#include "Display.hpp"
+#include "HandType.hpp"
+#include "CompareHands.hpp"
+#include "Simulator.hpp"
+#include "SimulatorFactory.hpp"
 
 enum Stage {Ready, PreFlop, Flop, Turn, River, Settle, End};
 static std::string stage_text[7] = {"Ready", "PreFlop", "Flop", "Turn", "River", "Settle", "End"};
-bool hand_compare(std::pair<std::shared_ptr<Hand>, int> a, std::pair<std::shared_ptr<Hand>, int> b);
 
 class Poker
 {
@@ -28,11 +30,7 @@ private:
     void DoRiver();
     void DoSettle();
     void DoEnd();
-    
-    std::vector<std::pair<std::shared_ptr<Hand>, int>> GetWinner(std::vector<std::pair<std::shared_ptr<Hand>, int>>& player_hands);
-    std::vector<std::pair<std::shared_ptr<Hand>, int>> GetPlayerHands(Board board);
-    void CalculateCombination(std::vector<int>& win_turns, int idx, int deal_num);
-    
+
 public:
     Poker()
     {
@@ -50,9 +48,8 @@ public:
         deck.Shuffle();
     }
 
-
     void NextStage();
-    void Simulate();
+    void Simulate(std::string methods);
 
     void DisplayPlayerCards();
     void DisplayPlayerCards(int seat);

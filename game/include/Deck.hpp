@@ -4,7 +4,7 @@
 #include <random>
 
 #include<iostream>
-#include "card.hpp"
+#include "Card.hpp"
 
 class Deck{
 private:
