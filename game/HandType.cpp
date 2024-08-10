@@ -10,7 +10,7 @@ int CheckStraight(std::vector<int> number_table)
             int straight_cnt = n;
             for (int s = 0; s < 5 && straight_cnt != -1; s++)
             {
-                if (number_table[s + n] != 1)
+                if (number_table[s + n] < 1)
                 {
                     straight_cnt = -1;
                 }

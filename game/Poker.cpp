@@ -1,5 +1,29 @@
 #include "Poker.hpp"
 
+void Poker::InitDeck()
+{
+    deck.Initialize();
+    for(auto player: players)
+    {
+        if( player.ShowCards().size() > 0 )
+        {
+            for(auto card: player.ShowCards() )
+            {
+                deck.Remove(card);
+            }
+        }
+    }
+
+    for(auto card: board.ShowCards())
+    {
+        deck.Remove(card);
+    }
+
+    deck.Shuffle();
+    return;
+}
+
+
 void Poker::DoReady()
 {
     // All player are ready to play.
@@ -15,9 +39,17 @@ void Poker::DoReady()
         }
     }
 
-    if( deck.ShowCards().size() != deck.CorrectCardNum() )
+    int distribute_cards = 0;
+    for( auto player: this->players)
+    {
+        distribute_cards += player.ShowCards().size();
+    }
+    distribute_cards += board.ShowCards().size();
+
+    if( deck.ShowCards().size() != deck.CorrectCardNum()-distribute_cards )
     {
         std::cerr << "The number of cards should not be " << deck.ShowCards().size() << "." << std::endl;
+        throw;
         stage = End;
     }
     else{
@@ -30,7 +62,7 @@ void Poker::DoPreFlop()
 {
     for(int i=0;i<this->players.size();i++)
     {
-        if( !this->players[i].fold )
+        if( !this->players[i].fold && this->players[i].ShowCards().size()==0 )
         {
             this->players[i].PushCards( deck.Deal(2) );
         }
@@ -43,7 +75,10 @@ void Poker::DoPreFlop()
 
 void Poker::DoFlop()
 {
-    board.PushCards( deck.Deal(3) );
+    if( board.ShowCards().size() == 0 )
+    {
+        board.PushCards(deck.Deal(3));
+    }
     // Bet Stage
     // To-do
 
@@ -52,7 +87,10 @@ void Poker::DoFlop()
 
 void Poker::DoTurn()
 {
-    board.PushCards( deck.Deal(1) );
+    if( board.ShowCards().size() == 3 )
+    {
+        board.PushCards(deck.Deal(1));
+    }
     // Bet Stage
     // To-do
 
@@ -61,7 +99,10 @@ void Poker::DoTurn()
 
 void Poker::DoRiver()
 {
-    board.PushCards( deck.Deal(1) );
+    if(board.ShowCards().size() == 4)
+    {
+        board.PushCards(deck.Deal(1));
+    }
     // Bet Stage
     // To-do
 
@@ -116,12 +157,26 @@ void Poker::NextStage()
     }
 }
 
-void Poker::Simulate(std::string methods)
+void Poker::SimulateBattle(std::string methods)
 {
     Simulator* simulator = CreateSimulator(methods, deck, board, players);
     simulator->Simulate();
     simulator->ShowWinTurns();
     return;
+}
+
+AllRangeSimulator* Poker::SimulateAllRange(std::string methods, std::string player_name)
+{
+    AllRangeSimulator* simulator = nullptr;
+    for(auto player: players)
+    {
+        if( player.name == player_name )
+        {
+            simulator = CreateAllRangeSimulator(methods, board, player);
+            simulator->Simulate();
+        }
+    }
+    return simulator;
 }
 
 void Poker::DisplayPlayerCards()

@@ -6,66 +6,53 @@
 #include "HandType.hpp"
 #include "Poker.hpp"
 
-int main(){
-    // Card card1(Suits(3), 11);
-    // Card card2(Suits(1), 10);
-    // Card card3(Suits(2), 2);
-    // Card card4(Suits(3), 2);
-    // Card card5(Suits(0), 11);
+#include "app/mainwindow.hpp"
+// Spade, Heart, Diamond, Club
 
-    // Card card6(Suits(0), 4);
-    // Card card7(Suits(0), 8);
-
-    // Card card8(Suits(2), 1);
-    // Card card9(Suits(3), 0);
-
-    // Board b({card1, card2, card3, card4, card5});
-
-    // Player p1("Tony", {card6, card7}), p2("Alan", {card8, card9});
-
-    // HandType hand_type1(p1, b);
-    // Hand* p1_hand = hand_type1.PickTopHand();
-
-    // HandType hand_type2(p2, b);
-    // Hand* p2_hand = hand_type2.PickTopHand();
-
-    // bool flag = ( (*p1_hand) > (*p2_hand) );
-    // std::cout << "Player " << (flag? "1": "2")  <<" is winner!" << std::endl;
-
-    // display(p1_hand);
-    // display(p2_hand);
-
-    Player p1("Tony"), p2("Alan");
-    Poker poker({p1, p2});
+int main(int argc, char *argv[]){
+    Player p1("Tony", {Card("DT"), Card("H9")});
+    Player p2("Alan", {Card("SQ"), Card("D9")});
+    // Player p2("Alan");
+    // Player p3("Bob");
+    Board board({Card("D7"), Card("HT"), Card("DJ"), Card("HJ")});
+    // Board board({Card("CQ"), Card("S8"), Card("C7"), Card("C6")});
+    // Board board({Card("CQ"), Card("S8"), Card("C7"), Card("C6"), Card("C6")});
+    // Board board;
+    Poker poker({p1, p2}, board);
     // Ready
-    // poker.DisplayStage();
+    poker.DisplayStage();
     poker.NextStage();
 
     // PreFlop
-    poker.DisplayStage();
-    poker.NextStage();
+    // poker.DisplayStage();
+    // poker.NextStage();
     poker.DisplayPlayerCards();
 
     // Flop
-    poker.DisplayStage();
-    poker.NextStage();
+    // poker.DisplayStage();
+    // poker.NextStage();
 
     poker.DisplayBoardCards();
     poker.DisplayDeckCards();
-    poker.Simulate("thread");
-    poker.Simulate("naive");
+    auto simulator = poker.SimulateAllRange("Thread", "Tony");
+    // simulator->ShowAllRangeWinTurns();
+    simulator->ShowAllRangeTable(argc, argv);
+    // poker.SimulateBattle("thread");
+    // // poker.SimulateBattle("naive");
 
-    // Turn
-    // poker.DisplayStage();
-    // poker.NextStage();
+    // // Turn
+    // // poker.DisplayStage();
+    // // poker.NextStage();
 
-    // River
-    // poker.DisplayStage();
-    // poker.NextStage();
+    // // River
+    // // poker.DisplayStage();
+    // // poker.NextStage();
 
-    // Settle
-    // poker.DisplayStage();
-    // poker.NextStage();
+    // // Settle
+    // // poker.DisplayStage();
+    // // poker.NextStage();
 
-    // poker.NextStage();
+    // // poker.NextStage();
+
+    // test_window(argc, argv);
 }

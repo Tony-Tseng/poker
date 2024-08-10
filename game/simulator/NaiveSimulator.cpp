@@ -6,6 +6,7 @@ void NaiveSimulator::CalculateCombination(int idx, int deal_num)
     {
         std::vector<std::pair<std::shared_ptr<Hand>, int>> player_hands = GetPlayerHands(board, players);
         std::vector<std::pair<std::shared_ptr<Hand>, int>> winner = GetWinner(player_hands);
+        
         if( winner.size() == 1 )
         {
             win_turns[winner[0].second]++;

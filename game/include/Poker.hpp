@@ -10,6 +10,7 @@
 #include "CompareHands.hpp"
 #include "Simulator.hpp"
 #include "SimulatorFactory.hpp"
+#include "AllRangeSimulatorFactory.hpp"
 
 enum Stage {Ready, PreFlop, Flop, Turn, River, Settle, End};
 static std::string stage_text[7] = {"Ready", "PreFlop", "Flop", "Turn", "River", "Settle", "End"};
@@ -30,6 +31,7 @@ private:
     void DoRiver();
     void DoSettle();
     void DoEnd();
+    void InitDeck();
 
 public:
     Poker()
@@ -41,15 +43,22 @@ public:
     {
         chips = std::vector<int>(players.size(), 0);
     }
+    
     Poker(std::vector<Player> players): players(players) 
     {
         chips = std::vector<int>(players.size(), 0);
-        deck.Initialize();
-        deck.Shuffle();
+        InitDeck();
+    }
+
+    Poker(std::vector<Player> players, Board board): players(players), board(board) 
+    {
+        chips = std::vector<int>(players.size(), 0);
+        InitDeck();
     }
 
     void NextStage();
-    void Simulate(std::string methods);
+    void SimulateBattle(std::string methods);
+    AllRangeSimulator* SimulateAllRange(std::string methods, std::string player_name);
 
     void DisplayPlayerCards();
     void DisplayPlayerCards(int seat);

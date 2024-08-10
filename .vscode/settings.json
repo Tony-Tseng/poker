@@ -73,6 +73,10 @@
         "span": "cpp",
         "format": "cpp",
         "queue": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "__tree": "cpp",
+        "map": "cpp",
+        "condition_variable": "cpp",
+        "cinttypes": "cpp"
     }
 }

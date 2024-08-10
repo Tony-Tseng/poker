@@ -21,4 +21,5 @@ public:
     }
     virtual void Simulate() = 0;
     void ShowWinTurns();
+    std::vector<int> GetWinTurns() {return this->win_turns;}
 };
